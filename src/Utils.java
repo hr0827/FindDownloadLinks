@@ -32,14 +32,14 @@ public class Utils {
             modules = "jz5u";
         }else if (url.contains("www.orsoon.com")){//未来软件园
             modules = "orsoon";
-        } else if (url.contains("www.crsky.com")){//非凡软件站
+        }else if (url.contains("www.crsky.com")){//非凡软件站
             modules = "crsky";
         }else if (url.contains("www.onlinedown.net")){//华军软件园
             modules = "onlinedown";
-        }else if(url.contains("www.xiazaiba.com")){//下载吧
+        }else if (url.contains("www.xiazaiba.com")){//下载吧
             modules = "xiazaiba";
-        }else{
-            modules = "";
+        }else if (url.contains("www.greenxiazai.com")){//绿色下载站
+            modules = "greenxiazai";
         }
         return modules;
     }
@@ -64,6 +64,7 @@ public class Utils {
                 case "jz5u":
                 case "xiazaiba":
                 case "crsky":
+                case "greenxiazai":
                     inputStreamReader = new InputStreamReader(inputStream,"GBK");
                     break;
                 case "orsoon":
@@ -155,11 +156,18 @@ public class Utils {
                 int start_xiazaiba = content_xiazaiba.indexOf("downlist(");
                 int end_xiazaiba = content_xiazaiba.indexOf("','");
                 String temp_xiazaiba = content_xiazaiba.substring(start_xiazaiba, end_xiazaiba);
-                int temp_start_xiazaiba = temp_xiazaiba.indexOf(",'/");
+                int temp_start_xiazaiba = temp_xiazaiba.indexOf("\",TypeID:\"");
                 int temp_end_xiazaiba = temp_xiazaiba.length();
                 String half_xiazaiba = temp_xiazaiba.substring(temp_start_xiazaiba + 2, temp_end_xiazaiba);
                 String full_xiazaiba = "http://xiazai.xiazaiba.com" + half_xiazaiba;
                 downloadLinks.add(full_xiazaiba);
+                break;
+            case "greenxiazai":
+                Elements elements_greenxiazai = document.getElementsByAttributeValue("onclick", "SetHome();");
+                for (Element e: elements_greenxiazai
+                     ) {
+                    downloadLinks.add(e.attr("href"));
+                }
                 break;
             default:
                 break;
@@ -193,6 +201,7 @@ public class Utils {
                 softwareName = title_string.split(" - ")[0];
                 break;
             case "xiazaiba":
+            case "greenxiazai":
                 String temp1 = title_string.split("-")[0];
                 String temp2 = temp1.split("\\|")[1];//注 : '|'的转义字符是'\\|'
                 softwareName = temp2;
