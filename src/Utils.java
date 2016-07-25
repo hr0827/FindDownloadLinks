@@ -40,6 +40,10 @@ public class Utils {
             modules = "xiazaiba";
         }else if (url.contains("www.greenxiazai.com")){//绿色下载站
             modules = "greenxiazai";
+        }else if (url.contains("www.downg.com")){
+            modules = "downg";
+        }else{
+            modules = "";
         }
         return modules;
     }
@@ -65,6 +69,7 @@ public class Utils {
                 case "xiazaiba":
                 case "crsky":
                 case "greenxiazai":
+                case "downg":
                     inputStreamReader = new InputStreamReader(inputStream,"GBK");
                     break;
                 case "orsoon":
@@ -169,6 +174,14 @@ public class Utils {
                     downloadLinks.add(e.attr("href"));
                 }
                 break;
+            case "downg":
+                Elements elements_downg = document.getElementsByClass("download-list");
+                Elements elements_downg_a = elements_downg.get(0).getElementsByTag("a");
+                for (Element e: elements_downg_a
+                     ) {
+                    downloadLinks.add(e.attr("href"));
+                }
+                break;
             default:
                 break;
         }
@@ -205,6 +218,10 @@ public class Utils {
                 String temp1 = title_string.split("-")[0];
                 String temp2 = temp1.split("\\|")[1];//注 : '|'的转义字符是'\\|'
                 softwareName = temp2;
+                break;
+            case "downg":
+                //TODO 抽取软件名
+                softwareName = title_string;
                 break;
             default:
                 break;
