@@ -40,8 +40,12 @@ public class Utils {
             modules = "xiazaiba";
         }else if (url.contains("www.greenxiazai.com")){//绿色下载站
             modules = "greenxiazai";
-        }else if (url.contains("www.downg.com")){
+        }else if (url.contains("www.downg.com")){//绿软家园
             modules = "downg";
+        }else if (url.contains("dl.pconline.com.cn")){
+            modules = "pconline";
+        }else if (url.contains("www.duote.com")){
+            modules = "duote";
         }else{
             modules = "";
         }
@@ -70,6 +74,8 @@ public class Utils {
                 case "crsky":
                 case "greenxiazai":
                 case "downg":
+                case "pconline":
+                case "duote":
                     inputStreamReader = new InputStreamReader(inputStream,"GBK");
                     break;
                 case "orsoon":
@@ -182,6 +188,23 @@ public class Utils {
                     downloadLinks.add(e.attr("href"));
                 }
                 break;
+            case "pconline":
+                Elements elements_pconline = document.getElementsByAttribute("tempUrl");
+                for (Element e:elements_pconline
+                     ) {
+                    if (e.attr("class").equals("link-a")){//屏蔽高速下载,只留下本地下载
+                        downloadLinks.add(e.attr("tempUrl"));
+                    }
+                }
+                break;
+            case "duote":
+                //TODO 添加对该网站手机模块的支持(暂时只支持PC软件网页处理)
+                String content_duote = document.toString();
+                int start_duote = content_duote.indexOf("var sPubdown = '");
+                int ent_duote = content_duote.indexOf("var serUrl = '';");
+                String half_duote = content_duote.substring(start_duote + 16, ent_duote - 2);
+                downloadLinks.add(half_duote);
+                break;
             default:
                 break;
         }
@@ -201,27 +224,62 @@ public class Utils {
         String title_string = tile_element.text();;
         switch (modules){
             case "jz5u":
-                softwareName = title_string.split("-")[0];
+                if (title_string.contains("-")){
+                    softwareName = title_string.split("-")[0];
+                }
                 break;
             case "orsoon":
-                //TODO
-                softwareName = title_string.split(" - ")[0];
+                if (title_string.contains(" - ")){
+                    softwareName = title_string.split(" - ")[0];
+                }
                 break;
             case "crsky":
-                softwareName = title_string.split("下载_")[0];
+                if (title_string.contains("")){
+                    softwareName = title_string.split("下载_")[0];
+                }
                 break;
             case "onlinedown":
-                softwareName = title_string.split(" - ")[0];
+                if (title_string.contains("")){
+                    softwareName = title_string.split(" - ")[0];
+                }
                 break;
             case "xiazaiba":
             case "greenxiazai":
-                String temp1 = title_string.split("-")[0];
-                String temp2 = temp1.split("\\|")[1];//注 : '|'的转义字符是'\\|'
-                softwareName = temp2;
+                String temp1_greenxiazai = title_string;
+                String temp2_greenxiazai = title_string;
+                if (title_string.contains("")){
+                    temp1_greenxiazai = title_string.split("-")[0];
+                }
+                if (title_string.contains("")){
+                    temp2_greenxiazai = temp1_greenxiazai.split("\\|")[1];//注 : '|'的转义字符是'\\|'
+                }
+                softwareName = temp2_greenxiazai;
                 break;
             case "downg":
                 //TODO 抽取软件名
                 softwareName = title_string;
+                break;
+            case "pconline":
+                String temp1_pconline = title_string;
+                String temp2_pconline = title_string;
+                if (title_string.contains("\\【")){
+                    temp1_pconline = title_string.split("\\【")[0];
+                }
+                if (title_string.contains("_")){
+                    temp2_pconline = temp1_pconline.split("_")[1];
+                }
+                softwareName = temp2_pconline;
+                break;
+            case "duote":
+                String temp1_duote = title_string;
+                String temp2_duote = title_string;
+                if (title_string.contains("\\】")){
+                    temp1_duote = title_string.split("\\】")[1];
+                }
+                if (title_string.contains("_")){
+                    temp2_duote = temp1_duote.split("_")[0];
+                }
+                softwareName = temp2_duote;
                 break;
             default:
                 break;
@@ -245,11 +303,18 @@ public class Utils {
                 }
                 break;
             case "onlinedown":
-                if (url.contains("htm")) {//判断是否是真正的下载页面(如果包含了html,有可能需要再跳转一下)
+                if (url.contains("htm") && (!url.contains("_"))) {//判断是否是真正的下载页面(如果包含了htm,有可能需要再跳转一下)
                     String fileName = url.split("/")[url.split("/").length - 1];
                     int indexOfPoint = fileName.indexOf(".");
                     String fileNumber = fileName.substring(0, indexOfPoint);
                     url = "http://www.onlinedown.net/softdown/" + fileNumber + "_2.htm";
+                }
+                break;
+            case "pconline":
+                if (url.contains("html") && (!url.contains("-"))) {
+                    String filename = url.split("/")[url.split("/").length - 1];
+                    String fileNumber = filename.split("\\.")[0];
+                    url = "http://dl.pconline.com.cn/download/" + fileNumber + "-1.html";
                 }
                 break;
             default:
