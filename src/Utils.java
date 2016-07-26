@@ -42,11 +42,13 @@ public class Utils {
             modules = "greenxiazai";
         }else if (url.contains("www.downg.com")){//绿软家园
             modules = "downg";
-        }else if (url.contains("dl.pconline.com.cn")){
+        }else if (url.contains("dl.pconline.com.cn")){//太平洋电脑网
             modules = "pconline";
-        }else if (url.contains("www.duote.com")){
+        }else if (url.contains("www.duote.com")){//多特软件站
             modules = "duote";
-        }else{
+        }else if(url.contains("www.3987.com")){//统一下载站
+            modules = "3987";
+        }else {
             modules = "";
         }
         return modules;
@@ -63,6 +65,7 @@ public class Utils {
         String temp = "";
         String content = "";
         try {
+            //判断URL是否正确
             URL myUrl = new URL(url);
             URLConnection urlConnection = myUrl.openConnection();
             InputStream inputStream = urlConnection.getInputStream();
@@ -80,6 +83,7 @@ public class Utils {
                     break;
                 case "orsoon":
                 case "onlinedown":
+                case "3987":
                     inputStreamReader = new InputStreamReader(inputStream,"UTF-8");
                     break;
                 default:
@@ -94,6 +98,7 @@ public class Utils {
             inputStreamReader.close();
             inputStream.close();
         } catch (MalformedURLException e) {
+            MyFrame.jTextArea_result.append("输入URL非法!请检查是否以\"http://\"开头");
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
@@ -205,6 +210,14 @@ public class Utils {
                 String half_duote = content_duote.substring(start_duote + 16, ent_duote - 2);
                 downloadLinks.add(half_duote);
                 break;
+            case "3987":
+                Elements elements_3987 = document.getElementsByClass("dl-ico");
+                for (Element e: elements_3987
+                     ) {
+                    Element element_3987 = e.nextElementSibling();
+                    downloadLinks.add(element_3987.attr("href"));
+                }
+                break;
             default:
                 break;
         }
@@ -234,12 +247,12 @@ public class Utils {
                 }
                 break;
             case "crsky":
-                if (title_string.contains("")){
+                if (title_string.contains("下载_")){
                     softwareName = title_string.split("下载_")[0];
                 }
                 break;
             case "onlinedown":
-                if (title_string.contains("")){
+                if (title_string.contains(" - ")){
                     softwareName = title_string.split(" - ")[0];
                 }
                 break;
@@ -247,10 +260,10 @@ public class Utils {
             case "greenxiazai":
                 String temp1_greenxiazai = title_string;
                 String temp2_greenxiazai = title_string;
-                if (title_string.contains("")){
+                if (title_string.contains("-")){
                     temp1_greenxiazai = title_string.split("-")[0];
                 }
-                if (title_string.contains("")){
+                if (title_string.contains("\\|")){
                     temp2_greenxiazai = temp1_greenxiazai.split("\\|")[1];//注 : '|'的转义字符是'\\|'
                 }
                 softwareName = temp2_greenxiazai;
@@ -281,7 +294,19 @@ public class Utils {
                 }
                 softwareName = temp2_duote;
                 break;
+            case "3987":
+                String temp1_3987 = title_string;
+                String temp2_3987 = title_string;
+                if (title_string.contains("_")){
+                    temp1_3987 = title_string.split("_")[0];
+                }
+                if (title_string.contains("\\|")){
+                    temp2_3987 = temp1_3987.split("\\|")[1];//注 : '|'的转义字符是'\\|'
+                }
+                softwareName = temp2_3987;
+                break;
             default:
+                softwareName = title_string;
                 break;
         }
         return softwareName;

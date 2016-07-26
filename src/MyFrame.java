@@ -20,7 +20,9 @@ public class MyFrame extends JFrame{
     JButton jButton_start;
     JPanel jPanel_title;
 
-    JTextArea jTextArea_result;
+    //需要在外部更新日志
+    //TODO 考虑这种形式的合理性
+    static JTextArea jTextArea_result;
     JScrollPane jScrollPane_result;
     JPanel jPanel_result;
     /**
