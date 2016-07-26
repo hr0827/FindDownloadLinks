@@ -64,6 +64,11 @@ A little tool which can help you to find the true download links quickly.
 > ~~[FindDownloadLinks1.1](http://pan.baidu.com/s/1eRLCdG2)(2016/07/24)(该版本Bug众多,已被作者废弃)~~  
 > [FindDownloadLinks1.2](http://pan.baidu.com/s/1sl9u801)(2016/07/24)  
 > [FindDownloadLinks1.3](http://pan.baidu.com/s/1kUMhOSv)(2016/07/25)  
+> [FindDownloadLinks1.4](http://pan.baidu.com/s/1nuT5vfj)(2016/07/25)  
+> [FindDownloadLinks1.5](http://pan.baidu.com/s/1jIhiBlk)(2016/07/25)  
+> [FindDownloadLinks1.6](http://pan.baidu.com/s/1pKZ6RGJ)(2016/07/25)  
+> [FindDownloadLinks1.7](http://pan.baidu.com/s/1dFbnkQX)(2016/07/25)  
+> [FindDownloadLinks1.8](http://pan.baidu.com/s/1skWLdcp)(2016/07/27)  
 
 **使用方法:**  
 > 1.下载源码编译运行  
@@ -80,6 +85,11 @@ A little tool which can help you to find the true download links quickly.
 > **3. [非凡软件站](http://www.crsky.com/)**  
 > **4. [华军软件园](http://www.onlinedown.net/)**  
 > **5. [下载吧](http://www.xiazaiba.com/)**  
+> **6. [绿色下载站](http://www.greenxiazai.com/)**  
+> **7. [绿软家园](http://www.downg.com/)**  
+> **8. [太平洋软件下载中心](http://dl.pconline.com.cn/)**  
+> **9. [多特软件站](http://www.duote.com)**  
+> **10. [统一下载站](http://www.3987.com/)**  
 
 
 **环境支持:**  
@@ -93,7 +103,7 @@ A little tool which can help you to find the true download links quickly.
 
 **更新日志:**   
 > * 2016/07/23(1.0版)  
->  * 完成软件基本架构,具有可扩展性   
+>  * 完成软件基本架构,具有可扩展性  
 >  * 添加对[未来软件园](http://www.jz5u.com/)和[JZ5U绿色下载站](http://www.orsoon.com/)的支持  
 > * 2016/07/24(1.1版)  
 >  * 修复日志信息过长不能显示的BUG  
@@ -101,13 +111,26 @@ A little tool which can help you to find the true download links quickly.
 >  * 解决不同站点编码不同造成的乱码问题  
 >  * 添加对[华军软件园](http://www.onlinedown.net/)的支持  
 > * 2016/07/24(1.2版)  
->  * 修复前两个版本打包失败无法使用的问题   
+>  * 修复前两个版本打包失败无法使用的问题  
 >  * 完全修复所有支持网站的编码问题  
 >  * 精简jar包体积,从3M多减少到300k左右  
 > * 2016/07/25(1.3版)  
 >  * 添加对[下载吧](http://www.xiazaiba.com)的支持  
 >  * 优化程序结构(switch语句)  
 >  * 使用BASE64方式对下载链接进行解密  
+> * 2016/07/25(1.4版)  
+>  * 添加对[绿色下载站](http://www.greenxiazai.com/)的支持  
+> * 2016/07/25(1.5版)  
+>  * 添加对[绿软家园](http://www.downg.com/)的支持  
+> * 2016/07/25(1.6版)  
+>  * 修复onlinedown模块对URL的处理中的BUG  
+>  * 添加对[太平洋软件下载中心](http://dl.pconline.com.cn/)的支持  
+> * 2016/07/25(1.7版)  
+>  * 修复由于获取软件名失败而导致无法正常解析下载链接的BUG  
+>  * 添加对[多特软件站](http://www.duote.com)的支持  
+> * 2016/07/27(1.8版)  
+>  * 添加对[统一下载站](http://www.3987.com/)的支持  
+>  * 修复URL格式不正确时没有提示信息的BUG  
 
 　
 **贡献者名单(特别感谢)**  
